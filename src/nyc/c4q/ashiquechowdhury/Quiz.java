@@ -11,7 +11,11 @@ public class Quiz {
     final private Map<String, String> mediumDictionary = new HashMap<>();
     final private Map<String, String> hardDictionary = new HashMap<>();
     private int size = 0;
-    final private List<String> definitions = new ArrayList<>();
+    int level = 1;
+    final private List<String> easyDefinitions = new ArrayList<>();
+    final private List<String> mediumDefinitions = new ArrayList<>();
+    final private List<String> hardDefinitions = new ArrayList<>();
+
 
     InputStream definitionFile;
     InputStream wordFile;
@@ -27,19 +31,42 @@ public class Quiz {
         while(wordScanner.hasNext()){
             String definition = definitionScanner.nextLine();
             String word = wordScanner.nextLine();
-            definitions.add(definition);
+//            System.out.println(definition + " : " + word);
             size++;
             easyDictionary.put(word,definition);
+            mediumDictionary.put(word, definition);
+            hardDictionary.put(word, definition);
+//            if(!wordScanner.hasNext()) {
+//                for (String i : easyDictionary.keySet()) {
+//                    System.out.println(i);
+//                }
+//            }
+            easyDefinitions.add(word);
+            mediumDefinitions.add(word);
+            hardDefinitions.add(word);
         }
     }
 
-    public String randomDefinition(){
+    public String randomEasyWord(){
         Random random = new Random();
-        int randomNum = random.nextInt(size+1);
-        return definitions.get(randomNum);
+        int randomNum = random.nextInt(size);
+        return easyDefinitions.get(randomNum);
+
     }
 
+    public String randomMediumWord(){
+        Random random = new Random();
+        int randomNum = random.nextInt(size);
+        String word = easyDefinitions.get(randomNum);
+        return mediumDefinitions.get(randomNum);
+    }
 
+    public String randomHardWord(){
+        Random random = new Random();
+        int randomNum = random.nextInt(size);
+        String word = easyDefinitions.get(randomNum);
+        return hardDefinitions.get(randomNum);
+    }
 
     //Checks if files have same line size
     public static boolean sameNumLines(File definitionFile, File wordFile) throws IOException, IllegalArgumentException{
@@ -59,7 +86,41 @@ public class Quiz {
         System.out.println(easyDictionary.values());
     }
 
-    public String associatedAnswer(String randomWord) {
+    public String associatedEasyAnswer(String randomWord) {
         return easyDictionary.get(randomWord);
+    }
+
+    public String associatedMediumAnswer(String randomWord) {
+        return mediumDictionary.get(randomWord);
+    }
+
+    public String associatedHardAnswer(String randomWord) {
+        return hardDictionary.get(randomWord);
+    }
+
+    public void advancelevel() {
+        level++;
+    }
+
+    public String randomWord() {
+        if(level == 1){
+            return randomEasyWord();
+        }
+        else if(level ==2){
+            return randomMediumWord();
+        }
+        else
+            return randomHardWord();
+    }
+
+    public String answer(String key) {
+        if(level == 1){
+            return associatedEasyAnswer(key);
+        }
+        else if(level ==2){
+            return associatedMediumAnswer(key);
+        }
+        else
+            return associatedHardAnswer(key);
     }
 }
