@@ -1,0 +1,11 @@
+Data type that represents an integer number ranging -128 to 127
+Data type that represents an integer number ranging -32768 to 32767
+Data type that represents an integer number ranging from -2^31 to (2^31)-1
+Data type that represents an integer number ranging -2^63 to (2^63)-1
+Data type that represents a floating points single precision number
+Data type that represents a floating points double precision number
+Data type with only two values true and false
+Data type that is a 16-bit Unicode character
+Word for objects that cannot be changed once created (like strings)
+Type of loop that executes first and then checks condition
+Return value for a function when no value is returned
